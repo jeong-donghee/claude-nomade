@@ -2,74 +2,49 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const avatarColors = [
-  "bg-emerald-400", "bg-blue-400", "bg-violet-400", "bg-amber-400",
-  "bg-rose-400", "bg-teal-400", "bg-orange-400", "bg-cyan-400",
-  "bg-pink-400", "bg-green-400", "bg-indigo-400", "bg-red-400",
+  "bg-[#2a2624]", "bg-[#1a1a1e]", "bg-[#2a2624]", "bg-[#1a1a1e]",
+  "bg-[#2a2624]", "bg-[#1a1a1e]", "bg-[#2a2624]", "bg-[#1a1a1e]",
+  "bg-[#2a2624]", "bg-[#1a1a1e]", "bg-[#2a2624]", "bg-[#1a1a1e]",
 ];
 
-const avatarInitials = [
-  "K", "J", "M", "S", "H", "L", "P", "W", "A", "D", "C", "T",
-];
+const avatarInitials = ["K", "J", "M", "S", "H", "L", "P", "W", "A", "D", "C", "T"];
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[560px] flex items-center justify-center bg-gradient-to-br from-emerald-800 via-emerald-700 to-blue-800 overflow-hidden">
-      {/* 배경 패턴 (한국 지도 vibe) */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-white rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-20 w-64 h-64 bg-blue-300 rounded-full blur-3xl" />
-        <div className="absolute top-40 right-40 w-48 h-48 bg-emerald-300 rounded-full blur-2xl" />
+    <section className="relative min-h-[560px] flex items-center justify-center bg-[#0e0e10] overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: "linear-gradient(160deg, #0e0e10 0%, #141416 50%, #0e0e10 100%)" }} />
+        <div className="absolute top-16 right-20 w-72 h-72 bg-[#d4af37] opacity-5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-16 w-56 h-56 bg-[#d4af37] opacity-4 rounded-full blur-3xl" />
       </div>
-
-      {/* 콘텐츠 */}
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center gap-6">
-        {/* 헤드라인 배지 */}
-        <span className="inline-block bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium px-4 py-1.5 rounded-full">
-          🇰🇷 한국 디지털 노마드 커뮤니티
+        <span className="inline-block bg-[#d4af37]/10 border border-[#d4af37]/30 text-[#d4af37] text-sm font-medium px-4 py-1.5 rounded-full" style={{ letterSpacing: "0.06em" }}>
+          한국 디지털 노마드 커뮤니티
         </span>
-
-        {/* 메인 헤드라인 */}
-        <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
+        <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight" style={{ letterSpacing: "-0.02em" }}>
           대한민국에서<br />
-          <span className="text-emerald-200">일하며 살기 좋은 도시</span>
+          <span className="text-[#d4af37]">일하며 살기 좋은 도시</span>
         </h1>
-
-        {/* 서브 헤드라인 */}
-        <p className="text-lg text-emerald-100 max-w-xl mx-auto leading-relaxed">
+        <p className="text-lg text-[#8a8279] max-w-xl mx-auto leading-relaxed">
           원격 근무자를 위한 완벽한 도시를 찾아보세요.<br />
           생활비, 인터넷, 카페까지 모든 정보를 한 곳에서.
         </p>
-
-        {/* 이메일 입력 폼 */}
         <div className="w-full max-w-md flex flex-col sm:flex-row gap-2">
-          <Input
-            type="email"
-            placeholder="📧 이메일 주소를 입력하세요"
-            className="flex-1 h-12 text-base bg-white/95 border-0 placeholder-neutral-400 rounded-xl"
-          />
-          <Button
-            size="lg"
-            className="h-12 bg-accent hover:bg-accent/90 text-white font-semibold rounded-xl px-6 shadow-lg shadow-orange-500/30 transition-all duration-200 hover:shadow-orange-500/40"
-          >
+          <Input type="email" placeholder="이메일 주소를 입력하세요" className="flex-1 h-12 text-base bg-[#141416] border border-[#2a2624] text-white placeholder-[#8a8279] rounded-xl focus:border-[#d4af37]" />
+          <Button size="lg" className="h-12 bg-[#d4af37] hover:bg-[#c4a030] text-[#0e0e10] font-semibold rounded-xl px-6 transition-all duration-200" style={{ letterSpacing: "0.04em" }}>
             시작하기 →
           </Button>
         </div>
-
-        {/* 소셜 프루프 */}
         <div className="flex flex-col items-center gap-3 pt-2">
-          {/* 아바타 행 */}
           <div className="flex items-center">
             {avatarColors.map((color, i) => (
-              <div
-                key={i}
-                className={`w-8 h-8 rounded-full ${color} border-2 border-emerald-800 flex items-center justify-center text-white text-xs font-semibold -ml-2 first:ml-0`}
-              >
+              <div key={i} className={`w-8 h-8 rounded-full ${color} border border-[#d4af37]/40 flex items-center justify-center text-[#d4af37] text-xs font-semibold -ml-2 first:ml-0`}>
                 {avatarInitials[i]}
               </div>
             ))}
-            <span className="ml-3 text-emerald-100 text-sm font-medium">+860</span>
+            <span className="ml-3 text-[#d4af37] text-sm font-medium">+860</span>
           </div>
-          <p className="text-emerald-200 text-sm">
+          <p className="text-[#8a8279] text-sm">
             이미 <span className="font-semibold text-white">872명</span>의 노마드가 함께하고 있습니다
           </p>
         </div>
