@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-
 const navLinks = [
   { label: "홈", href: "/" },
   { label: "도시찾기", href: "#cities" },
@@ -34,8 +32,8 @@ export default function Navbar() {
           {/* 데스크톱 우측 액션 */}
           <div className="hidden md:flex items-center gap-3">
             <button className="text-sm text-[#7a7068] hover:text-[#2d5016] transition-colors">검색</button>
-            <Button variant="ghost" size="sm" className="text-[#7a7068]">로그인</Button>
-            <Button size="sm" className="bg-[#2d5016] hover:bg-[#3d6b22] text-white">회원가입</Button>
+            <a href="/login" className="text-sm font-medium text-[#7a7068] hover:text-[#2d5016] transition-colors px-2 py-1">로그인</a>
+            <a href="/register" className="text-sm font-medium bg-[#2d5016] hover:bg-[#3d6b22] text-white px-3 py-1.5 rounded-md transition-colors">회원가입</a>
           </div>
 
           {/* 모바일 햄버거 */}
@@ -54,8 +52,8 @@ export default function Navbar() {
           ))}
           <div className="pt-2 border-t border-[#ddd5c8] flex flex-col gap-2">
             <button className="text-sm text-[#7a7068] text-left py-1">검색</button>
-            <Button variant="ghost" size="sm" className="justify-start text-[#7a7068]">로그인</Button>
-            <Button size="sm" className="bg-[#2d5016] hover:bg-[#3d6b22] text-white">회원가입</Button>
+            <a href="/login" className="text-sm font-medium text-[#7a7068] hover:text-[#2d5016] py-1" onClick={() => setMenuOpen(false)}>로그인</a>
+            <a href="/register" className="text-sm font-medium bg-[#2d5016] hover:bg-[#3d6b22] text-white px-3 py-1.5 rounded-md transition-colors" onClick={() => setMenuOpen(false)}>회원가입</a>
           </div>
         </div>
       )}
