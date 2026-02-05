@@ -9,10 +9,10 @@
   --font-sans: var(--font-pretendard), 'Noto Sans KR', sans-serif;
   --font-mono: var(--font-geist-mono);
 
-  /* PRD 커스톤 컬러 */
-  --color-brand-green: #2E7D32;
-  --color-brand-blue: #0277BD;
-  --color-brand-orange: #F57C00;
+  /* 미니멀 테마 컬러 */
+  --color-brand-green: #1a1a1a;
+  --color-brand-blue: #6b7280;
+  --color-brand-orange: #1a1a1a;
   --color-brand-success: #4CAF50;
   --color-brand-warning: #FF9800;
   --color-brand-error: #F44336;
@@ -62,13 +62,13 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #2E7D32;
+  --primary: #1a1a1a;
   --primary-foreground: #ffffff;
-  --secondary: #0277BD;
-  --secondary-foreground: #ffffff;
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: #F57C00;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #1a1a1a;
+  --muted: #f9fafb;
+  --muted-foreground: #6b7280;
+  --accent: #1a1a1a;
   --accent-foreground: #ffffff;
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);

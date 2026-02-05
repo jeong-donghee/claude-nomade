@@ -51,18 +51,18 @@ export default function CityQuizSection() {
         {/* 타이틀 */}
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-neutral-800">
-            🎯 당신에게 맞는 도시를 찾아보세요
+            당신에게 맞는 도시를 찾아보세요
           </h2>
           <p className="text-neutral-500 mt-2">3가지 질문에 답하면 맞춤 도시를 추천해드리겠습니다</p>
         </div>
 
         {/* 퀴즈 카드 */}
-        <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-6 sm:p-8 flex flex-col gap-8">
+        <div className="bg-white rounded-lg border border-neutral-200 p-6 sm:p-8 flex flex-col gap-8">
 
           {/* Q1: 예산 */}
           <div className="flex flex-col gap-3">
             <h3 className="text-base font-bold text-neutral-800">
-              1️⃣ 월 예산은 얼마 정도인가요?
+              01. 월 예산은 얼마 정도인가요?
             </h3>
             <RadioGroup value={budget} onValueChange={setBudget} className="grid grid-cols-2 gap-2">
               {budgetOptions.map((opt) => (
@@ -82,7 +82,7 @@ export default function CityQuizSection() {
           {/* Q2: 분위기 */}
           <div className="flex flex-col gap-3">
             <h3 className="text-base font-bold text-neutral-800">
-              2️⃣ 어떤 분위기의 도시를 원하신가요?
+              02. 어떤 분위기의 도시를 원하신가요?
             </h3>
             <RadioGroup value={atmosphere} onValueChange={setAtmosphere} className="grid grid-cols-3 gap-2">
               {atmosphereOptions.map((opt) => (
@@ -102,7 +102,7 @@ export default function CityQuizSection() {
           {/* Q3: 중요 요소 (복수 선택) */}
           <div className="flex flex-col gap-3">
             <h3 className="text-base font-bold text-neutral-800">
-              3️⃣ 중요하게 생각하는 요소는? <span className="text-sm font-normal text-neutral-400">(복수 선택)</span>
+              03. 중요하게 생각하는 요소는? <span className="text-sm font-normal text-neutral-400">(복수 선택)</span>
             </h3>
             <div className="grid grid-cols-2 gap-2">
               {importantFactors.map((factor) => (
@@ -123,7 +123,7 @@ export default function CityQuizSection() {
           {/* 제출 버튼 */}
           <Button
             size="lg"
-            className="w-full mt-2 bg-brand-green hover:bg-brand-green/90 text-white font-semibold rounded-xl h-12 text-base
+            className="w-full mt-2 bg-neutral-900 hover:bg-neutral-800 text-white font-medium rounded-md h-12 text-base
                        disabled:opacity-40 disabled:cursor-not-allowed"
             disabled={!isValid}
             onClick={handleSubmit}

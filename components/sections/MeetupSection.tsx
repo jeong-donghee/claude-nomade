@@ -1,7 +1,7 @@
 import { meetups } from "@/data/cities";
 
 const avatarColors = [
-  "bg-emerald-400", "bg-blue-400", "bg-violet-400", "bg-amber-400", "bg-rose-400",
+  "bg-neutral-300", "bg-neutral-400", "bg-neutral-300", "bg-neutral-500", "bg-neutral-400",
 ];
 
 export default function MeetupSection() {
@@ -11,8 +11,8 @@ export default function MeetupSection() {
         {/* 타이틀 + 요약 */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-3">
           <div>
-            <h2 className="text-3xl font-bold text-neutral-800">
-              🤝 다가오는 노마드 밋업
+            <h2 className="text-3xl font-bold text-neutral-900 tracking-tight">
+              다가오는 밋업
             </h2>
             <p className="text-sm text-neutral-500 mt-1">
               이번 달: <span className="font-semibold text-neutral-700">12개</span>
@@ -30,14 +30,14 @@ export default function MeetupSection() {
           {meetups.map((meetup) => (
             <div
               key={meetup.id}
-              className="bg-white rounded-2xl border border-neutral-100 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden flex flex-col"
+              className="bg-white rounded-lg border border-neutral-200 hover:shadow-sm transition-shadow duration-200 overflow-hidden flex flex-col"
             >
               {/* 상태 배지 바 */}
-              <div className={`px-4 py-2 ${meetup.status === "확정" ? "bg-emerald-50" : "bg-amber-50"}`}>
-                <span className={`inline-flex items-center text-xs font-bold px-2 py-0.5 rounded-full
-                  ${meetup.status === "확정" ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}
+              <div className="px-4 py-2 bg-neutral-50 border-b border-neutral-100">
+                <span className={`inline-flex items-center text-xs font-semibold px-2 py-0.5 rounded
+                  ${meetup.status === "확정" ? "bg-neutral-200 text-neutral-700" : "bg-neutral-100 text-neutral-500"}`}
                 >
-                  {meetup.status === "확정" ? "✅ 확정" : "⏰ 대기중"}
+                  {meetup.status === "확정" ? "확정" : "대기중"}
                 </span>
               </div>
 
@@ -45,7 +45,7 @@ export default function MeetupSection() {
               <div className="p-4 flex flex-col gap-3 flex-1">
                 {/* 날짜 */}
                 <div className="flex items-center gap-2">
-                  <div className="bg-brand-green text-white rounded-lg w-12 h-12 flex flex-col items-center justify-center">
+                  <div className="bg-neutral-900 text-white rounded w-12 h-12 flex flex-col items-center justify-center">
                     <span className="text-xs leading-none opacity-80">{meetup.date.split("/")[1]}월</span>
                     <span className="text-lg font-bold leading-none">{meetup.date.split("/")[0]}</span>
                   </div>
@@ -73,16 +73,16 @@ export default function MeetupSection() {
                       <span className="ml-1 text-xs text-neutral-400">...</span>
                     )}
                   </div>
-                  <span className="text-xs text-neutral-500">
-                    👥 {meetup.currentAttendees}/{meetup.maxAttendees}
+                  <span className="text-xs text-neutral-400">
+                    {meetup.currentAttendees}/{meetup.maxAttendees}명
                   </span>
                 </div>
 
                 {/* 참가 버튼 */}
                 <div className="mt-auto pt-2">
-                  <button className="w-full text-sm font-semibold text-brand-green border border-brand-green rounded-lg py-2
-                                     hover:bg-brand-green hover:text-white transition-colors duration-200">
-                    참가하기 →
+                  <button className="w-full text-sm font-medium text-neutral-600 border border-neutral-300 rounded py-2
+                                     hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-colors duration-200">
+                    참가하기
                   </button>
                 </div>
               </div>
@@ -92,10 +92,10 @@ export default function MeetupSection() {
 
         {/* 밋업 만들기 CTA */}
         <div className="mt-8 text-center">
-          <button className="inline-flex items-center gap-1 text-sm font-semibold text-brand-blue
-                             border border-brand-blue rounded-xl px-5 py-2.5
-                             hover:bg-brand-blue hover:text-white transition-colors duration-200">
-            내 도시에서 밋업 만들기 +
+          <button className="inline-flex items-center gap-1 text-sm font-medium text-neutral-600
+                             border border-neutral-300 rounded px-5 py-2.5
+                             hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-colors duration-200">
+            밋업 만들기 +
           </button>
         </div>
       </div>
