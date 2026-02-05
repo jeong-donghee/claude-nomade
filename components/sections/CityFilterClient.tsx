@@ -17,8 +17,8 @@ export default function CityFilterClient() {
             onClick={() => setActiveCategory(category)}
             className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition-colors duration-200
               ${activeCategory === category
-                ? "bg-brand-green text-white shadow-sm"
-                : "bg-white text-neutral-600 border border-neutral-200 hover:border-brand-green hover:text-brand-green"
+                ? "bg-[#00f0ff] text-[#0a0a0f] font-semibold"
+                : "bg-[#0f0f1a] text-[#8888aa] border border-[#2a2a3e] hover:border-[#00f0ff] hover:text-[#00f0ff]"
               }`}
           >
             {category}
@@ -28,12 +28,12 @@ export default function CityFilterClient() {
 
       {/* 정렬 드롭다운 */}
       <div className="flex items-center gap-2">
-        <span className="text-sm text-neutral-400">정렬:</span>
+        <span className="text-sm text-[#8888aa]">정렬:</span>
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="text-sm font-medium text-neutral-600 border border-neutral-200 rounded-lg px-3 py-1.5 bg-white
-                     focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent cursor-pointer"
+          className="text-sm font-medium text-[#e8e8f0] border border-[#2a2a3e] rounded-lg px-3 py-1.5 bg-[#0f0f1a]
+                     focus:outline-none focus:ring-2 focus:ring-[#00f0ff] focus:border-transparent cursor-pointer"
         >
           {citySortOptions.map((option) => (
             <option key={option.value} value={option.value}>

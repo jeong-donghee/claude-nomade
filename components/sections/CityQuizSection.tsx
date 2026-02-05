@@ -46,29 +46,29 @@ export default function CityQuizSection() {
   const isValid = budget && atmosphere && factors.length > 0;
 
   return (
-    <section className="py-16 bg-neutral-50">
+    <section className="py-16 bg-[#0a0a0f]">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* 타이틀 */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-neutral-800">
-            🎯 당신에게 맞는 도시를 찾아보세요
+          <h2 className="text-3xl font-bold text-white">
+            당신에게 맞는 도시를 찾아보세요
           </h2>
-          <p className="text-neutral-500 mt-2">3가지 질문에 답하면 맞춤 도시를 추천해드리겠습니다</p>
+          <p className="text-[#8888aa] mt-2">3가지 질문에 답하면 맞춤 도시를 추천해드리겠습니다</p>
         </div>
 
         {/* 퀴즈 카드 */}
-        <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-6 sm:p-8 flex flex-col gap-8">
+        <div className="bg-[#0f0f1a] rounded-2xl border border-[#2a2a3e] p-6 sm:p-8 flex flex-col gap-8" style={{ boxShadow: "0 0 20px rgba(0,240,255,0.08)" }}>
 
           {/* Q1: 예산 */}
           <div className="flex flex-col gap-3">
-            <h3 className="text-base font-bold text-neutral-800">
-              1️⃣ 월 예산은 얼마 정도인가요?
+            <h3 className="text-base font-bold text-white">
+              01. 월 예산은 얼마 정도인가요?
             </h3>
             <RadioGroup value={budget} onValueChange={setBudget} className="grid grid-cols-2 gap-2">
               {budgetOptions.map((opt) => (
                 <div key={opt.value} className="flex items-center space-x-2">
                   <RadioGroupItem value={opt.value} id={`budget-${opt.value}`} />
-                  <Label htmlFor={`budget-${opt.value}`} className="text-sm text-neutral-600 cursor-pointer">
+                  <Label htmlFor={`budget-${opt.value}`} className="text-sm text-[#8888aa] cursor-pointer">
                     {opt.label}
                   </Label>
                 </div>
@@ -77,18 +77,18 @@ export default function CityQuizSection() {
           </div>
 
           {/* 구분선 */}
-          <div className="border-t border-neutral-100" />
+          <div className="border-t border-[#2a2a3e]" />
 
           {/* Q2: 분위기 */}
           <div className="flex flex-col gap-3">
-            <h3 className="text-base font-bold text-neutral-800">
-              2️⃣ 어떤 분위기의 도시를 원하신가요?
+            <h3 className="text-base font-bold text-white">
+              02. 어떤 분위기의 도시를 원하신가요?
             </h3>
             <RadioGroup value={atmosphere} onValueChange={setAtmosphere} className="grid grid-cols-3 gap-2">
               {atmosphereOptions.map((opt) => (
                 <div key={opt.value} className="flex items-center space-x-2">
                   <RadioGroupItem value={opt.value} id={`atmo-${opt.value}`} />
-                  <Label htmlFor={`atmo-${opt.value}`} className="text-sm text-neutral-600 cursor-pointer">
+                  <Label htmlFor={`atmo-${opt.value}`} className="text-sm text-[#8888aa] cursor-pointer">
                     {opt.label}
                   </Label>
                 </div>
@@ -97,12 +97,12 @@ export default function CityQuizSection() {
           </div>
 
           {/* 구분선 */}
-          <div className="border-t border-neutral-100" />
+          <div className="border-t border-[#2a2a3e]" />
 
           {/* Q3: 중요 요소 (복수 선택) */}
           <div className="flex flex-col gap-3">
-            <h3 className="text-base font-bold text-neutral-800">
-              3️⃣ 중요하게 생각하는 요소는? <span className="text-sm font-normal text-neutral-400">(복수 선택)</span>
+            <h3 className="text-base font-bold text-white">
+              03. 중요하게 생각하는 요소는? <span className="text-sm font-normal text-[#4a4a66]">(복수 선택)</span>
             </h3>
             <div className="grid grid-cols-2 gap-2">
               {importantFactors.map((factor) => (
@@ -112,7 +112,7 @@ export default function CityQuizSection() {
                     checked={factors.includes(factor.value)}
                     onCheckedChange={() => toggleFactor(factor.value)}
                   />
-                  <Label htmlFor={`factor-${factor.value}`} className="text-sm text-neutral-600 cursor-pointer">
+                  <Label htmlFor={`factor-${factor.value}`} className="text-sm text-[#8888aa] cursor-pointer">
                     {factor.label}
                   </Label>
                 </div>
@@ -123,8 +123,9 @@ export default function CityQuizSection() {
           {/* 제출 버튼 */}
           <Button
             size="lg"
-            className="w-full mt-2 bg-brand-green hover:bg-brand-green/90 text-white font-semibold rounded-xl h-12 text-base
+            className="w-full mt-2 bg-[#00f0ff] hover:bg-[#00d4e0] text-[#0a0a0f] font-semibold rounded-xl h-12 text-base
                        disabled:opacity-40 disabled:cursor-not-allowed"
+            style={{ boxShadow: "0 0 16px rgba(0,240,255,0.4)" }}
             disabled={!isValid}
             onClick={handleSubmit}
           >
