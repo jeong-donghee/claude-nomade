@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { cities, cityCategories, citySortOptions, CityCard as CityCardType } from "@/data/cities";
 import CityCardComponent from "@/components/sections/CityCard";
+import { useCityLikes } from "@/hooks/useCityLikes";
 
 function searchCities(allCities: CityCardType[], query: string): CityCardType[] {
   if (!query) return allCities;
@@ -36,6 +37,7 @@ export default function CityFilterClient() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("전체");
   const [sortBy, setSortBy] = useState<string>("popular");
+  const { toggleLike, isLiked, getLikeCount } = useCityLikes();
 
   const displayCities = useMemo(() => {
     const searched = searchCities(cities, searchQuery);
@@ -89,7 +91,7 @@ export default function CityFilterClient() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
           {displayCities.map((city) => (
-            <CityCardComponent key={city.id} city={city} />
+            <CityCardComponent key={city.id} city={city} likeCount={getLikeCount(city.id)} isLiked={isLiked(city.id)} onToggleLike={toggleLike} />
           ))}
         </div>
       )}
