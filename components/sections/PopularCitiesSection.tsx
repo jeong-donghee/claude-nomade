@@ -1,5 +1,5 @@
-import { cities } from "@/data/cities";
-import CityFilterClient from "@/components/sections/CityFilterClient";
+import Link from "next/link";
+import { cities, CityCard } from "@/data/cities";
 
 function getRankStyle(rank: number) {
   if (rank === 1) return "bg-[#d4af37] text-[#3a3228]";
@@ -21,16 +21,22 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function PopularCitiesSection() {
+interface PopularCitiesSectionProps {
+  previewCount?: number;
+  showFilter?: boolean;
+}
+
+export default function PopularCitiesSection({ previewCount, showFilter = false }: PopularCitiesSectionProps) {
+  const displayCities = previewCount ? cities.slice(0, previewCount) : cities;
+
   return (
     <section id="cities" className="py-16 bg-[#faf7f2]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-3">
           <h2 className="text-3xl font-bold text-[#3a3228]">인기 도시 TOP 10</h2>
         </div>
-        <CityFilterClient />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
-          {cities.map((city) => (
+          {displayCities.map((city) => (
             <div key={city.id} className="bg-white rounded-2xl overflow-hidden border border-[#ddd5c8] hover:shadow-md transition-all duration-300 ease-out hover:-translate-y-1 flex flex-col">
               <div className="relative h-40 bg-[#eef5eb]" style={{ backgroundImage: "linear-gradient(135deg, #eef5eb, #e8f0e2)" }}>
                 <div className="absolute top-3 left-3">
@@ -66,9 +72,13 @@ export default function PopularCitiesSection() {
             </div>
           ))}
         </div>
-        <div className="mt-10 text-center">
-          <button className="inline-flex items-center gap-2 text-[#2d5016] font-semibold text-base border border-[#2d5016] rounded-xl px-6 py-3 hover:bg-[#2d5016] hover:text-white transition-colors duration-200">전체 도시 보기 (40개)</button>
-        </div>
+        {previewCount && (
+          <div className="mt-10 text-center">
+            <Link href="/cities" className="inline-flex items-center gap-2 text-[#2d5016] font-semibold text-base border border-[#2d5016] rounded-xl px-6 py-3 hover:bg-[#2d5016] hover:text-white transition-colors duration-200">
+              전체 도시 보기 ({cities.length}개)
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

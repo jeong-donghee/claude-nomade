@@ -15,7 +15,7 @@ export default function HomePage() {
             대한민국에서 일하며 살기 좋은 도시를 찾아보세요
           </h1>
         </section>
-        <PopularCitiesSection />
+        <PopularCitiesSection previewCount={6} />
       </main>
 
       {/* 푸터 */}

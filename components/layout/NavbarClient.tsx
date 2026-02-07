@@ -5,7 +5,7 @@ import { logout } from "@/app/auth/actions";
 
 const navLinks = [
   { label: "홈", href: "/" },
-  { label: "도시찾기", href: "#cities" },
+  { label: "도시찾기", href: "/cities" },
 ];
 
 interface NavbarClientProps {
