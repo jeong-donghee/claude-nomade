@@ -1,7 +1,6 @@
 const footerLinks = {
-  서비스: [{ label: "도시찾기", href: "#" }, { label: "도시비교", href: "#" }, { label: "리뷰작성", href: "#" }],
-  커뮤니티: [{ label: "밋업", href: "#" }, { label: "Q&A", href: "#" }, { label: "채팅방", href: "#" }],
-  지원: [{ label: "도움말", href: "#" }, { label: "가이드", href: "#" }, { label: "문의", href: "#" }],
+  서비스: [{ label: "도시찾기", href: "#" }],
+  지원: [{ label: "도움말", href: "#" }, { label: "문의", href: "#" }],
 };
 const socialLinks = [
   { icon: "f", label: "Facebook", href: "#" },
@@ -15,7 +14,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#3a3228] text-[#a0896e]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-lg font-bold text-white">한국 노마드 시티</span>

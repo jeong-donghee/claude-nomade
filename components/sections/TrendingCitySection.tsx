@@ -1,4 +1,5 @@
-import { trendingCities } from "@/data/cities";
+// Data removed for MVP — component unused
+const trendingCities: { id: number; name: string; nameEn: string; description: string; rankChange: number; rating: number; monthlyCost: number; internetSpeed: number; newVisitors: number }[] = [];
 
 export default function TrendingCitySection() {
   return (

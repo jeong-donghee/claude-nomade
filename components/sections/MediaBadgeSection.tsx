@@ -1,4 +1,5 @@
-import { mediaBadges } from "@/data/cities";
+// Data removed for MVP — component unused
+const mediaBadges: { name: string }[] = [];
 
 export default function MediaBadgeSection() {
   return (

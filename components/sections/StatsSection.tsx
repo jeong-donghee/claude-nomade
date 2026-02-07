@@ -1,4 +1,5 @@
-import { stats } from "@/data/cities";
+// Data removed for MVP — component unused
+const stats: { label: string; value: string }[] = [];
 
 export default function StatsSection() {
   return (
