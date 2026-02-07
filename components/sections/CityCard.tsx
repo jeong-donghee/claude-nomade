@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CityCard as CityCardType } from "@/data/cities";
 
 function getRankStyle(rank: number) {
@@ -51,7 +52,7 @@ export default function CityCard({ city }: { city: CityCardType }) {
           <div className="flex justify-between text-xs"><span className="text-[#7a7068]">카페 밀도</span><span className="font-semibold text-[#3a3228]">{city.cafeDensity}개 / 500m</span></div>
         </div>
         <div className="mt-auto pt-3">
-          <button className="w-full text-sm font-medium text-[#2d5016] border border-[#2d5016] rounded-lg py-2 hover:bg-[#2d5016] hover:text-white transition-colors duration-200">상세보기</button>
+          <Link href={`/cities/${city.id}`} className="block w-full text-sm font-medium text-[#2d5016] border border-[#2d5016] rounded-lg py-2 hover:bg-[#2d5016] hover:text-white transition-colors duration-200 text-center">상세보기</Link>
         </div>
       </div>
     </div>
