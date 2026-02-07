@@ -6,8 +6,6 @@ import { logout } from "@/app/auth/actions";
 const navLinks = [
   { label: "홈", href: "/" },
   { label: "도시찾기", href: "#cities" },
-  { label: "밋업", href: "#meetups" },
-  { label: "커뮤니티", href: "#community" },
 ];
 
 interface NavbarClientProps {
@@ -41,7 +39,6 @@ export default function NavbarClient({ user }: NavbarClientProps) {
 
           {/* 데스크톱 우측 액션 */}
           <div className="hidden md:flex items-center gap-3">
-            <button className="text-sm text-[#7a7068] hover:text-[#2d5016] transition-colors">검색</button>
             {user ? (
               <>
                 <span className="text-sm text-[#3a3228]">{user.email}</span>
@@ -93,7 +90,6 @@ export default function NavbarClient({ user }: NavbarClientProps) {
             </a>
           ))}
           <div className="pt-2 border-t border-[#ddd5c8] flex flex-col gap-2">
-            <button className="text-sm text-[#7a7068] text-left py-1">검색</button>
             {user ? (
               <>
                 <span className="text-sm text-[#3a3228] py-1">{user.email}</span>

@@ -1,4 +1,6 @@
-import { recentReviews, popularQnAs } from "@/data/cities";
+// Data removed for MVP — component unused
+const recentReviews: { id: number; author: string; city: string; content: string; rating: number; likes: number; comments: number }[] = [];
+const popularQnAs: { id: number; question: string; answers: number; views: number }[] = [];
 
 function StarRating({ rating }: { rating: number }) {
   return (

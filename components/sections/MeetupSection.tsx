@@ -1,4 +1,5 @@
-import { meetups } from "@/data/cities";
+// Data removed for MVP — component unused
+const meetups: { id: number; date: string; dayOfWeek: string; location: string; title: string; status: string; currentAttendees: number; maxAttendees: number; avatarCount: number }[] = [];
 
 const avatarColors = ["bg-[#6b8f5e]", "bg-[#8b6f47]", "bg-[#4a7c3f]", "bg-[#a0896e]", "bg-[#5a9048]"];
 
