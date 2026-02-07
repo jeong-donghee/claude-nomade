@@ -24,6 +24,8 @@ function sortCities(cityList: CityCardType[], sortBy: string): CityCardType[] {
       return sorted.sort((a, b) => b.rating - a.rating);
     case "cost":
       return sorted.sort((a, b) => a.monthlyCost - b.monthlyCost);
+    case "likes":
+      return sorted.sort((a, b) => b.likes - a.likes);
     case "latest":
     default:
       return sorted;
