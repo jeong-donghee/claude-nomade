@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { cities } from "@/data/cities";
 import CityCardComponent from "@/components/sections/CityCard";
+import { useCityLikes } from "@/hooks/useCityLikes";
 
 interface PopularCitiesSectionProps {
   previewCount?: number;
@@ -8,6 +11,7 @@ interface PopularCitiesSectionProps {
 
 export default function PopularCitiesSection({ previewCount }: PopularCitiesSectionProps) {
   const displayCities = previewCount ? cities.slice(0, previewCount) : cities;
+  const { toggleLike, isLiked, getLikeCount } = useCityLikes();
 
   return (
     <section id="cities" className="py-16 bg-[#faf7f2]">
@@ -17,7 +21,7 @@ export default function PopularCitiesSection({ previewCount }: PopularCitiesSect
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
           {displayCities.map((city) => (
-            <CityCardComponent key={city.id} city={city} />
+            <CityCardComponent key={city.id} city={city} likeCount={getLikeCount(city.id)} isLiked={isLiked(city.id)} onToggleLike={toggleLike} />
           ))}
         </div>
         {previewCount && (

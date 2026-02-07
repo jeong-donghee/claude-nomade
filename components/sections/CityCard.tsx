@@ -21,14 +21,32 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function CityCard({ city }: { city: CityCardType }) {
+interface CityCardProps {
+  city: CityCardType;
+  likeCount?: number;
+  isLiked?: boolean;
+  onToggleLike?: (cityId: number) => void;
+}
+
+export default function CityCard({ city, likeCount, isLiked, onToggleLike }: CityCardProps) {
   return (
     <div className="bg-white rounded-2xl overflow-hidden border border-[#ddd5c8] hover:shadow-md transition-all duration-300 ease-out hover:-translate-y-1 flex flex-col">
       <div className="relative h-40 bg-[#eef5eb]" style={{ backgroundImage: "linear-gradient(135deg, #eef5eb, #e8f0e2)" }}>
         <div className="absolute top-3 left-3">
           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${getRankStyle(city.rank)}`}>#{city.rank}</span>
         </div>
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-3 right-3 flex items-center gap-1.5">
+          {onToggleLike && (
+            <button
+              onClick={(e) => { e.preventDefault(); onToggleLike(city.id); }}
+              className="inline-flex items-center gap-1 bg-white/80 hover:bg-white text-xs font-medium px-2 py-1 rounded-full transition-colors duration-200"
+            >
+              <span className={isLiked ? "text-red-500" : "text-[#7a7068]"}>
+                {isLiked ? "♥" : "♡"}
+              </span>
+              <span className="text-[#5c5248]">{likeCount ?? city.likes}</span>
+            </button>
+          )}
           <span className="inline-flex items-center bg-white/70 text-[#5c5248] text-xs font-medium px-2 py-0.5 rounded-full">{city.category}</span>
         </div>
       </div>
