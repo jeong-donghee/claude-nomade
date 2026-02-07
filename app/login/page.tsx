@@ -1,25 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
+import { login } from "@/app/auth/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Navbar from "@/components/layout/Navbar";
+import NavbarClient from "@/components/layout/NavbarClient";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    // TODO: 실제 로그인 API 연동
-  };
+  const [state, formAction, isPending] = useActionState(login, { error: "" });
 
   return (
     <div className="min-h-screen flex flex-col bg-[#faf7f2]">
-      <Navbar />
+      <NavbarClient user={null} />
 
       <main className="flex-1 flex items-center justify-center px-4 py-20">
         <div className="w-full max-w-md">
@@ -34,16 +27,15 @@ export default function LoginPage() {
 
           {/* 폼 카드 */}
           <div className="bg-white rounded-2xl border border-[#ddd5c8] shadow-sm p-6 sm:p-8">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <form action={formAction} className="flex flex-col gap-5">
               {/* 이메일 */}
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="email" className="text-sm font-semibold text-[#3a3228]">이메일</Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="예: nomad@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   className="h-11 rounded-xl bg-white border-[#ddd5c8] text-[#3a3228] placeholder-[#7a7068] focus:ring-[#2d5016] focus:border-[#2d5016]"
                   required
                 />
@@ -57,25 +49,25 @@ export default function LoginPage() {
                 </div>
                 <Input
                   id="password"
+                  name="password"
                   type="password"
                   placeholder="비밀번호 입력"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
                   className="h-11 rounded-xl bg-white border-[#ddd5c8] text-[#3a3228] placeholder-[#7a7068] focus:ring-[#2d5016] focus:border-[#2d5016]"
                   required
                 />
               </div>
 
               {/* 에러 메시지 */}
-              {error && <p className="text-sm text-[#c0392b] -mt-2">{error}</p>}
+              {state.error && <p className="text-sm text-[#c0392b] -mt-2">{state.error}</p>}
 
               {/* 로그인 버튼 */}
               <Button
                 type="submit"
                 size="lg"
+                disabled={isPending}
                 className="w-full h-11 bg-[#2d5016] hover:bg-[#3d6b22] text-white font-semibold rounded-xl text-sm mt-1"
               >
-                로그인
+                {isPending ? "로그인 중..." : "로그인"}
               </Button>
             </form>
 
