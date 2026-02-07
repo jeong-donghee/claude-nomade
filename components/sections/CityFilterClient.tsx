@@ -16,7 +16,7 @@ function filterCities(allCities: CityCardType[], category: string): CityCardType
   return allCities.filter((city) => city.category === category);
 }
 
-function sortCities(cityList: CityCardType[], sortBy: string): CityCardType[] {
+function sortCities(cityList: CityCardType[], sortBy: string, likeCounts: Record<number, number>): CityCardType[] {
   const sorted = [...cityList];
   switch (sortBy) {
     case "popular":
@@ -26,7 +26,7 @@ function sortCities(cityList: CityCardType[], sortBy: string): CityCardType[] {
     case "cost":
       return sorted.sort((a, b) => a.monthlyCost - b.monthlyCost);
     case "likes":
-      return sorted.sort((a, b) => b.likes - a.likes);
+      return sorted.sort((a, b) => (likeCounts[b.id] ?? b.likes) - (likeCounts[a.id] ?? a.likes));
     case "latest":
     default:
       return sorted;
@@ -37,13 +37,13 @@ export default function CityFilterClient() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("전체");
   const [sortBy, setSortBy] = useState<string>("popular");
-  const { toggleLike, isLiked, getLikeCount } = useCityLikes();
+  const { toggleLike, isLiked, getLikeCount, likeCounts } = useCityLikes();
 
   const displayCities = useMemo(() => {
     const searched = searchCities(cities, searchQuery);
     const filtered = filterCities(searched, activeCategory);
-    return sortCities(filtered, sortBy);
-  }, [searchQuery, activeCategory, sortBy]);
+    return sortCities(filtered, sortBy, likeCounts);
+  }, [searchQuery, activeCategory, sortBy, likeCounts]);
 
   return (
     <>
