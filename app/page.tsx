@@ -1,11 +1,11 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PopularCitiesSection from "@/components/sections/PopularCitiesSection";
-import { getCities } from "@/lib/queries/cities";
+import { getCitiesWithLikes } from "@/lib/queries/cities";
 
 export default async function HomePage() {
-  // 서버에서 DB 데이터 fetch
-  const cities = await getCities();
+  // 서버에서 DB 데이터 fetch (좋아요 수 포함)
+  const cities = await getCitiesWithLikes();
   const popularCities = cities.slice(0, 6); // 상위 6개
 
   return (
