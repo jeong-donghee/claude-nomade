@@ -44,7 +44,7 @@ export default async function CityDetailPage({ params }: CityDetailPageProps) {
             <div className="flex items-center gap-4 text-sm">
               <span className="text-[#8b6f47] font-semibold">{city.rating}/5.0 ★</span>
               <span className="text-[#7a7068]">{city.recommendRate}% 추천</span>
-              <CityLikeButton cityId={city.id} />
+              <CityLikeButton cityId={city.id} initialLikeCount={city.likes} />
             </div>
           </div>
 
