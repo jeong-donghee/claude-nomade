@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { cities, cityCategories, citySortOptions, CityCard as CityCardType } from "@/data/cities";
+import { cityCategories, citySortOptions, CityCard as CityCardType } from "@/data/cities";
 import CityCardComponent from "@/components/sections/CityCard";
 import { useCityLikes } from "@/hooks/useCityLikes";
 
@@ -33,17 +33,21 @@ function sortCities(cityList: CityCardType[], sortBy: string, likeCounts: Record
   }
 }
 
-export default function CityFilterClient() {
+interface CityFilterClientProps {
+  initialCities: CityCardType[];
+}
+
+export default function CityFilterClient({ initialCities }: CityFilterClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("전체");
   const [sortBy, setSortBy] = useState<string>("popular");
   const { toggleLike, isLiked, getLikeCount, likeCounts } = useCityLikes();
 
   const displayCities = useMemo(() => {
-    const searched = searchCities(cities, searchQuery);
+    const searched = searchCities(initialCities, searchQuery);
     const filtered = filterCities(searched, activeCategory);
     return sortCities(filtered, sortBy, likeCounts);
-  }, [searchQuery, activeCategory, sortBy, likeCounts]);
+  }, [initialCities, searchQuery, activeCategory, sortBy, likeCounts]);
 
   return (
     <>

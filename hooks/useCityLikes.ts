@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { cities } from "@/data/cities";
 
 const LIKED_IDS_KEY = "nomade-liked-city-ids";
 const LIKE_COUNTS_KEY = "nomade-city-like-counts";
@@ -16,14 +15,6 @@ function loadFromStorage<T>(key: string, fallback: T): T {
   }
 }
 
-function buildInitialCounts(): Record<number, number> {
-  const counts: Record<number, number> = {};
-  for (const city of cities) {
-    counts[city.id] = city.likes;
-  }
-  return counts;
-}
-
 export function useCityLikes() {
   const [likedCityIds, setLikedCityIds] = useState<number[]>([]);
   const [likeCounts, setLikeCounts] = useState<Record<number, number>>({});
@@ -34,7 +25,7 @@ export function useCityLikes() {
     const storedIds = loadFromStorage<number[]>(LIKED_IDS_KEY, []);
     const storedCounts = loadFromStorage<Record<number, number>>(
       LIKE_COUNTS_KEY,
-      buildInitialCounts(),
+      {}, // 빈 객체로 초기화 (DB에서 실제 좋아요 수를 가져옴)
     );
     setLikedCityIds(storedIds);
     setLikeCounts(storedCounts);

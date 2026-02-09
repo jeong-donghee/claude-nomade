@@ -1,16 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { cities } from "@/data/cities";
+import { CityCard } from "@/data/cities";
 import CityCardComponent from "@/components/sections/CityCard";
 import { useCityLikes } from "@/hooks/useCityLikes";
 
 interface PopularCitiesSectionProps {
-  previewCount?: number;
+  cities: CityCard[];
 }
 
-export default function PopularCitiesSection({ previewCount }: PopularCitiesSectionProps) {
-  const displayCities = previewCount ? cities.slice(0, previewCount) : cities;
+export default function PopularCitiesSection({ cities }: PopularCitiesSectionProps) {
   const { toggleLike, isLiked, getLikeCount } = useCityLikes();
 
   return (
@@ -20,17 +19,15 @@ export default function PopularCitiesSection({ previewCount }: PopularCitiesSect
           <h2 className="text-3xl font-bold text-[#3a3228]">인기 도시 TOP 10</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
-          {displayCities.map((city) => (
+          {cities.map((city) => (
             <CityCardComponent key={city.id} city={city} likeCount={getLikeCount(city.id)} isLiked={isLiked(city.id)} onToggleLike={toggleLike} />
           ))}
         </div>
-        {previewCount && (
-          <div className="mt-10 text-center">
-            <Link href="/cities" className="inline-flex items-center gap-2 text-[#2d5016] font-semibold text-base border border-[#2d5016] rounded-xl px-6 py-3 hover:bg-[#2d5016] hover:text-white transition-colors duration-200">
-              전체 도시 보기 ({cities.length}개)
-            </Link>
-          </div>
-        )}
+        <div className="mt-10 text-center">
+          <Link href="/cities" className="inline-flex items-center gap-2 text-[#2d5016] font-semibold text-base border border-[#2d5016] rounded-xl px-6 py-3 hover:bg-[#2d5016] hover:text-white transition-colors duration-200">
+            전체 도시 보기 (10개)
+          </Link>
+        </div>
       </div>
     </section>
   );

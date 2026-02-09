@@ -163,6 +163,256 @@
 
 ---
 
+## [x] Step 6: 도시 좋아요 데이터 및 상태 관리 기반 구축
+
+**오버뷰:**
+각 도시에 좋아요 기능을 추가하기 위한 데이터 및 상태 관리 기반을 구축한다. `CityCard` 인터페이스에 `likes` 필드를 추가하고, 사용자의 좋아요 상태를 localStorage로 관리하는 커스텀 훅을 생성한다.
+
+### 수정/개선 항목
+
+- [x] `data/cities.ts`에서 `CityCard` 인터페이스에 `likes: number` 필드 추가
+- [x] 각 도시 더미 데이터에 초기 좋아요 수 설정 (임의의 값)
+- [x] `data/cities.ts`의 `citySortOptions`에 `{ value: "likes", label: "좋아요순" }` 추가
+- [x] `hooks/useCityLikes.ts` (신규) 생성 — localStorage 기반 좋아요 상태 관리 커스텀 훅
+  - `likedCityIds`: 사용자가 좋아요한 도시 ID 목록
+  - `likeCounts`: 도시별 좋아요 수 (초기값은 더미 데이터 기반, 이후 동적 업데이트)
+  - `toggleLike(cityId)`: 좋아요 토글 및 카운트 증감
+  - `isLiked(cityId)`: 특정 도시 좋아요 여부 확인
+  - `getLikeCount(cityId)`: 특정 도시 좋아요 수 반환
+
+### 검증/확인 항목
+
+- [x] `CityCard` 타입에 `likes` 필드가 추가되었는지 확인
+- [x] 더미 데이터 각 도시에 좋아요 수가 설정되었는지 확인
+- [x] `useCityLikes` 훅이 정상 동작하는지 확인 (토글, 저장/복원)
+- [x] 페이지 새로고침 후에도 좋아요 상태가 유지되는지 확인
+- [x] `npm run build` 통과
+
+---
+
+## [x] Step 7: 도시 카드 및 상세 페이지에 좋아요 버튼 UI 추가
+
+**오버뷰:**
+도시 카드와 상세 페이지에 하트 아이콘 좋아요 버튼과 좋아요 수를 표시한다. 사용자가 하트를 클릭하면 좋아요가 토글된다.
+
+### 수정/개선 항목
+
+- [x] `components/sections/CityCard.tsx`에 하트 아이콘(채워진/빈) + 좋아요 수 표시 UI 추가
+- [x] `CityCard` Props에 `likeCount`, `isLiked`, `onToggleLike` 추가
+- [x] `components/sections/CityFilterClient.tsx`에서 `useCityLikes` 훅 연동, `CityCard`에 좋아요 props 전달
+- [x] `components/sections/PopularCitiesSection.tsx`를 클라이언트 컴포넌트로 전환 또는 래퍼 생성하여 `useCityLikes` 훅 연동
+- [x] `app/cities/[id]/page.tsx` 상세 페이지에 좋아요 버튼 추가 (클라이언트 컴포넌트 분리 필요)
+
+### 검증/확인 항목
+
+- [x] 도시 카드에 하트 아이콘과 좋아요 수가 표시되는지 확인
+- [x] 하트 클릭 시 좋아요가 토글되고 수가 즉시 반영되는지 확인
+- [x] `/cities` 페이지, 홈 미리보기, 상세 페이지 모두에 적용되었는지 확인
+- [x] 좋아요 상태가 페이지 이동 간에 유지되는지 확인
+- [x] 모바일/태블릿 반응형이 정상인지 확인
+- [x] `npm run build` 통과
+
+---
+
+## [x] Step 8: 좋아요순 정렬 기능 구현
+
+**오버뷰:**
+도시 찾기 페이지(`/cities`)의 정렬 드롭다운에서 "좋아요순" 옵션을 연동하여 좋아요 수 기준 내림차순 정렬을 구현한다.
+
+### 수정/개선 항목
+
+- [x] `components/sections/CityFilterClient.tsx`의 `sortCities` 함수에 `"likes"` 케이스 추가
+- [x] `useCityLikes` 훅의 `getLikeCount` 활용하여 좋아요 수 기준 정렬
+- [x] `useMemo` 의존성 배열에 `likeCounts` 추가하여 좋아요 변경 시 정렬이 즉시 반영되도록 구현
+
+### 검증/확인 항목
+
+- [x] 정렬 드롭다운에 "좋아요순" 옵션이 표시되는지 확인
+- [x] "좋아요순" 선택 시 좋아요 수 내림차순으로 정렬되는지 확인
+- [x] 좋아요 토글 후 정렬이 즉시 반영되는지 확인
+- [x] "좋아요순" + 카테고리 필터 + 검색어 조합이 정상 동작하는지 확인
+- [x] 기존 정렬 옵션(인기순, 평점순 등)이 정상 동작하는지 확인
+- [x] `npm run build` 통과
+
+---
+
+## [x] Step 9: 데이터베이스 테이블 생성
+
+**오버뷰:**
+Supabase에 `cities` 테이블과 `city_likes` 테이블을 생성한다. 기존 `CityCard` + `CityDetail` 인터페이스 구조를 DB 스키마로 매핑한다.
+
+### 수정/개선 항목
+
+- [x] Supabase에서 `cities` 테이블 생성
+  - 컬럼: `id` (int8, PK), `rank` (int2), `name` (text), `name_en` (text), `category` (text), `rating` (numeric), `recommend_rate` (int2), `monthly_cost` (int4), `internet_speed` (int4), `monthly_rent` (int4), `cafe_density` (int2), `bg_color` (text), `description` (text), `pros` (jsonb), `cons` (jsonb), `recommended_places` (jsonb), `climate` (text), `transport` (text), `created_at` (timestamptz)
+- [x] `city_likes` 테이블 생성
+  - 컬럼: `id` (uuid, PK), `user_id` (uuid, FK → auth.users), `city_id` (int8, FK → cities), `created_at` (timestamptz)
+  - `user_id + city_id` 유니크 제약 추가 (한 사용자는 한 도시에 좋아요 1회만)
+- [x] `cities` 테이블에 RLS(Row Level Security) 활성화
+  - 읽기: 모든 사용자(anon, authenticated) 허용
+  - 쓰기: 차단 (관리자만 가능)
+- [x] `city_likes` 테이블에 RLS 활성화
+  - `SELECT`: 모든 사용자 허용
+  - `INSERT`: `auth.uid() = user_id` (본인만 추가 가능)
+  - `DELETE`: `auth.uid() = user_id` (본인만 삭제 가능)
+- [x] Supabase advisor 보안 검사 실행하여 RLS 누락 확인
+
+### 검증/확인 항목
+
+- [x] Supabase 대시보드에서 `cities`, `city_likes` 테이블이 정상 생성되었는지 확인
+- [x] RLS 정책이 올바르게 적용되었는지 확인
+- [x] 비로그인 상태에서 `cities` 테이블 읽기가 가능한지 확인
+- [x] 비로그인 상태에서 `city_likes` 테이블 쓰기가 차단되는지 확인
+
+---
+
+## [x] Step 10: 시드 데이터 삽입
+
+**오버뷰:**
+`data/cities.ts`의 더미 데이터 10개를 `cities` 테이블에 INSERT한다. 기존 프론트엔드 데이터와 동일한 값을 유지한다.
+
+### 수정/개선 항목
+
+- [x] `data/cities.ts`의 `cities` 배열 (10개 도시 기본 정보)을 SQL INSERT 문으로 변환하여 `cities` 테이블에 삽입
+- [x] `data/cities.ts`의 `cityDetails` 객체 (10개 도시 상세 정보)를 동일 행의 해당 컬럼에 병합 삽입
+- [x] 삽입된 데이터의 `id` 값이 기존 더미 데이터의 `id`(1~10)와 일치하는지 확인
+
+### 검증/확인 항목
+
+- [x] `SELECT count(*) FROM cities` 결과가 10인지 확인
+- [x] `SELECT * FROM cities WHERE id = 1`의 `name`이 기존 더미 데이터와 일치하는지 확인
+- [x] `pros`, `cons`, `recommended_places` JSONB 컬럼이 올바른 배열 형태인지 확인
+
+---
+
+## [x] Step 11: Supabase TypeScript 타입 생성
+
+**오버뷰:**
+Supabase DB 스키마 기반으로 TypeScript 타입을 자동 생성하여 프로젝트에서 타입 안전한 쿼리를 작성할 수 있도록 한다.
+
+### 수정/개선 항목
+
+- [x] Supabase CLI 또는 MCP로 타입 생성
+- [x] 생성된 타입을 `lib/database.types.ts` 파일로 저장
+- [x] `utils/supabase/client.ts`와 `utils/supabase/server.ts`에서 `createClient<Database>()` 형태로 제네릭 타입 적용
+
+### 검증/확인 항목
+
+- [x] `lib/database.types.ts` 파일에 `cities`, `city_likes` 테이블 타입이 포함되어 있는지 확인
+- [x] `npm run build` 통과
+
+---
+
+## [x] Step 12: 도시 데이터 fetching 유틸리티 생성
+
+**오버뷰:**
+Supabase에서 도시 데이터를 조회하는 서버/클라이언트 유틸리티 함수를 생성한다. 기존 `data/cities.ts` 직접 import를 이 함수들로 점진적으로 교체할 수 있도록 한다.
+
+### 수정/개선 항목
+
+- [x] `lib/queries/cities.ts` (신규) — 서버 컴포넌트용 함수 작성
+  - `getCities()`: 전체 도시 목록 조회
+  - `getCityById(id: number)`: 단일 도시 조회 (기본 + 상세 정보)
+  - `getCityLikesCount(cityId: number)`: 특정 도시의 좋아요 수
+  - `getCitiesWithLikes()`: 도시 목록 + 각 도시별 좋아요 수 조회
+- [x] 각 함수에서 `utils/supabase/server.ts`의 `createClient()` 사용
+- [x] 반환 타입을 기존 `CityCard`, `CityDetail` 인터페이스와 호환되도록 매핑 (DB snake_case → 프론트 camelCase 변환)
+
+### 검증/확인 항목
+
+- [x] `getCities()` 호출 시 10개 도시 배열이 반환되는지 확인
+- [x] `getCityById(1)` 호출 시 서울 데이터가 반환되는지 확인
+- [x] 반환 타입이 기존 `CityCard` 인터페이스와 호환되는지 확인
+- [x] `npm run build` 통과
+
+---
+
+## [x] Step 13: 도시 목록 페이지 DB 연동
+
+**오버뷰:**
+`/cities` 페이지와 홈페이지의 도시 목록 데이터 소스를 `data/cities.ts` → Supabase 쿼리로 전환한다.
+
+### 수정/개선 항목
+
+- [x] `app/cities/page.tsx` — `cities` import 제거, `getCities()` 또는 `getCitiesWithLikes()`로 서버에서 fetch
+- [x] `components/sections/CityFilterClient.tsx` — `data/cities.ts`에서 직접 import하던 `cities`를 props로 받도록 변경
+- [x] `app/page.tsx` (홈페이지) — `PopularCitiesSection`에 서버에서 fetch한 도시 데이터 전달
+- [x] `components/sections/PopularCitiesSection.tsx` — `data/cities.ts` import 제거, props로 도시 데이터 수신
+
+### 검증/확인 항목
+
+- [x] `/cities` 페이지에서 DB의 10개 도시가 정상 표시되는지 확인
+- [x] 홈페이지 도시 미리보기가 정상 표시되는지 확인
+- [x] 카테고리 필터, 정렬, 검색 기능이 기존과 동일하게 동작하는지 확인
+- [x] `npm run build` 통과
+
+---
+
+## [x] Step 14: 도시 상세 페이지 DB 연동
+
+**오버뷰:**
+도시 상세 페이지(`/cities/[id]`)의 데이터 소스를 `data/cities.ts` → Supabase 단일 쿼리로 전환한다.
+
+### 수정/개선 항목
+
+- [x] `app/cities/[id]/page.tsx` — `cities`, `cityDetails` import 제거, `getCityById(id)`로 서버에서 fetch
+- [x] 존재하지 않는 도시 ID 접근 시 기존과 동일하게 `notFound()` 처리 유지
+
+### 검증/확인 항목
+
+- [x] `/cities/1` ~ `/cities/10` 각 페이지가 정상 렌더링되는지 확인
+- [x] 상세 정보(소개, 장단점, 추천 장소, 기후, 교통)가 기존과 동일하게 표시되는지 확인
+- [x] `/cities/99` 접근 시 404 처리되는지 확인
+- [x] `npm run build` 통과
+
+---
+
+## [ ] Step 15: 좋아요 기능 DB 연동
+
+**오버뷰:**
+좋아요 상태 관리를 localStorage 기반 → Supabase `city_likes` 테이블 기반으로 전환한다. 로그인 사용자만 좋아요 가능하며, 비로그인 사용자에게는 로그인 유도 처리를 한다.
+
+### 수정/개선 항목
+
+- [ ] `hooks/useCityLikes.ts` 리팩토링 — localStorage → Supabase 쿼리(`city_likes` INSERT/DELETE)로 교체
+  - `toggleLike`: `city_likes` 테이블에 INSERT (좋아요) 또는 DELETE (해제)
+  - `isLiked`: 현재 로그인 사용자의 `city_likes` 행 존재 여부 확인
+  - `getLikeCount`: `city_likes` 테이블에서 해당 도시의 COUNT 조회
+- [ ] Optimistic UI 적용 — 즉시 UI 반영 후 백그라운드 DB 반영, 실패 시 롤백
+- [ ] 비로그인 사용자 좋아요 클릭 시 로그인 페이지로 이동 또는 안내 메시지 표시
+- [ ] 좋아요 수 표시를 DB 기반 COUNT로 전환
+
+### 검증/확인 항목
+
+- [ ] 로그인 후 좋아요 클릭 시 `city_likes` 테이블에 행이 추가되는지 확인
+- [ ] 좋아요 해제 시 `city_likes` 테이블에서 행이 삭제되는지 확인
+- [ ] 페이지 새로고침 후에도 좋아요 상태가 유지되는지 확인 (DB 기반)
+- [ ] 다른 기기/브라우저에서 로그인해도 좋아요 상태가 동기화되는지 확인
+- [ ] 비로그인 상태에서 좋아요 클릭 시 적절한 안내가 표시되는지 확인
+- [ ] 좋아요순 정렬이 DB 기반 좋아요 수로 정상 동작하는지 확인
+- [ ] `npm run build` 통과
+
+---
+
+## [x] Step 16: 더미 데이터 정리 및 최종 검증
+
+**오버뷰:**
+모든 데이터 소스가 Supabase로 전환된 후, 더 이상 사용되지 않는 `data/cities.ts`의 더미 데이터를 정리한다.
+
+### 수정/개선 항목
+
+- [x] `data/cities.ts`에서 `cities` 배열과 `cityDetails` 객체 제거 (타입 정의는 유지하거나 `lib/types.ts`로 이동)
+- [x] 프로젝트 전체에서 `data/cities.ts`의 데이터 import가 남아있지 않은지 확인
+- [x] Supabase advisor 보안/성능 검사 최종 실행
+
+### 검증/확인 항목
+
+- [x] `data/cities.ts`에서 더미 데이터 제거 후에도 모든 페이지가 정상 동작하는지 확인
+- [x] `npm run build` 통과
+- [x] Supabase advisor 보안 경고 없음 확인
+
+---
+
 ## 요약
 
 | Step | 내용 | 핵심 변경 파일 |
@@ -172,3 +422,14 @@
 | **3** | 카테고리 필터 및 정렬 기능 구현 | `CityFilterClient.tsx` |
 | **4** | 도시명 검색 기능 추가 | `CityFilterClient.tsx` |
 | **5** | 도시 상세 보기 페이지 | `app/cities/[id]/page.tsx`(신규), `cities.ts` |
+| **6** | 도시 좋아요 데이터 및 상태 관리 기반 구축 | `cities.ts`, `hooks/useCityLikes.ts`(신규) |
+| **7** | 도시 카드 및 상세 페이지에 좋아요 버튼 UI 추가 | `CityCard.tsx`, `CityFilterClient.tsx`, `PopularCitiesSection.tsx`, `cities/[id]/page.tsx` |
+| **8** | 좋아요순 정렬 기능 구현 | `CityFilterClient.tsx` |
+| **9** | 데이터베이스 테이블 생성 (Supabase) | Supabase DB 스키마 |
+| **10** | 시드 데이터 삽입 | Supabase DB |
+| **11** | Supabase TypeScript 타입 생성 | `lib/database.types.ts`(신규) |
+| **12** | 도시 데이터 fetching 유틸리티 생성 | `lib/queries/cities.ts`(신규) |
+| **13** | 도시 목록 페이지 DB 연동 | `app/cities/page.tsx`, `CityFilterClient.tsx`, `PopularCitiesSection.tsx` |
+| **14** | 도시 상세 페이지 DB 연동 | `app/cities/[id]/page.tsx` |
+| **15** | 좋아요 기능 DB 연동 | `hooks/useCityLikes.ts` |
+| **16** | 더미 데이터 정리 및 최종 검증 | `data/cities.ts` |

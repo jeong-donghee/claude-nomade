@@ -1,8 +1,13 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PopularCitiesSection from "@/components/sections/PopularCitiesSection";
+import { getCities } from "@/lib/queries/cities";
 
-export default function HomePage() {
+export default async function HomePage() {
+  // 서버에서 DB 데이터 fetch
+  const cities = await getCities();
+  const popularCities = cities.slice(0, 6); // 상위 6개
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* 네비게이션 */}
@@ -15,7 +20,7 @@ export default function HomePage() {
             대한민국에서 일하며 살기 좋은 도시를 찾아보세요
           </h1>
         </section>
-        <PopularCitiesSection previewCount={6} />
+        <PopularCitiesSection cities={popularCities} />
       </main>
 
       {/* 푸터 */}

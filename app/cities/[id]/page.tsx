@@ -2,8 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { cities, cityDetails } from "@/data/cities";
 import CityLikeButton from "@/components/sections/CityLikeButton";
+import { getCityById } from "@/lib/queries/cities";
 
 interface CityDetailPageProps {
   params: Promise<{ id: string }>;
@@ -12,12 +12,17 @@ interface CityDetailPageProps {
 export default async function CityDetailPage({ params }: CityDetailPageProps) {
   const { id } = await params;
   const cityId = Number(id);
-  const city = cities.find((c) => c.id === cityId);
-  const detail = cityDetails[cityId];
 
-  if (!city || !detail) {
+  // DB에서 도시 데이터 fetch (기본 + 상세 정보)
+  const cityWithDetail = await getCityById(cityId);
+
+  if (!cityWithDetail) {
     notFound();
   }
+
+  // city와 detail을 분리 (기존 코드 호환성)
+  const city = cityWithDetail;
+  const detail = cityWithDetail;
 
   return (
     <div className="min-h-screen flex flex-col">
