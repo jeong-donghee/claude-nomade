@@ -1,10 +1,26 @@
 "use client";
 
+import { useEffect } from "react";
 import { useCityLikes } from "@/hooks/useCityLikes";
 
-export default function CityLikeButton({ cityId }: { cityId: number }) {
-  const { toggleLike, isLiked, getLikeCount } = useCityLikes();
+interface CityLikeButtonProps {
+  cityId: number;
+  initialLikeCount?: number;
+}
+
+export default function CityLikeButton({ cityId, initialLikeCount }: CityLikeButtonProps) {
+  const { toggleLike, isLiked, getLikeCount, setLikeCounts } = useCityLikes();
   const liked = isLiked(cityId);
+
+  // 초기 좋아요 수 설정
+  useEffect(() => {
+    if (initialLikeCount !== undefined) {
+      setLikeCounts((prev) => ({
+        ...prev,
+        [cityId]: initialLikeCount,
+      }));
+    }
+  }, [cityId, initialLikeCount, setLikeCounts]);
 
   return (
     <button

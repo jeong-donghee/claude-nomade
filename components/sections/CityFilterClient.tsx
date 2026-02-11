@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cityCategories, citySortOptions, CityCard as CityCardType } from "@/data/cities";
 import CityCardComponent from "@/components/sections/CityCard";
 import { useCityLikes } from "@/hooks/useCityLikes";
@@ -41,7 +41,16 @@ export default function CityFilterClient({ initialCities }: CityFilterClientProp
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("전체");
   const [sortBy, setSortBy] = useState<string>("popular");
-  const { toggleLike, isLiked, getLikeCount, likeCounts } = useCityLikes();
+  const { toggleLike, isLiked, getLikeCount, likeCounts, setLikeCounts } = useCityLikes();
+
+  // 서버에서 전달받은 좋아요 수를 초기화
+  useEffect(() => {
+    const initialCounts: Record<number, number> = {};
+    initialCities.forEach((city) => {
+      initialCounts[city.id] = city.likes;
+    });
+    setLikeCounts(initialCounts);
+  }, [initialCities, setLikeCounts]);
 
   const displayCities = useMemo(() => {
     const searched = searchCities(initialCities, searchQuery);

@@ -367,30 +367,30 @@ Supabase에서 도시 데이터를 조회하는 서버/클라이언트 유틸리
 
 ---
 
-## [ ] Step 15: 좋아요 기능 DB 연동
+## [x] Step 15: 좋아요 기능 DB 연동
 
 **오버뷰:**
 좋아요 상태 관리를 localStorage 기반 → Supabase `city_likes` 테이블 기반으로 전환한다. 로그인 사용자만 좋아요 가능하며, 비로그인 사용자에게는 로그인 유도 처리를 한다.
 
 ### 수정/개선 항목
 
-- [ ] `hooks/useCityLikes.ts` 리팩토링 — localStorage → Supabase 쿼리(`city_likes` INSERT/DELETE)로 교체
+- [x] `hooks/useCityLikes.ts` 리팩토링 — localStorage → Supabase 쿼리(`city_likes` INSERT/DELETE)로 교체
   - `toggleLike`: `city_likes` 테이블에 INSERT (좋아요) 또는 DELETE (해제)
   - `isLiked`: 현재 로그인 사용자의 `city_likes` 행 존재 여부 확인
   - `getLikeCount`: `city_likes` 테이블에서 해당 도시의 COUNT 조회
-- [ ] Optimistic UI 적용 — 즉시 UI 반영 후 백그라운드 DB 반영, 실패 시 롤백
-- [ ] 비로그인 사용자 좋아요 클릭 시 로그인 페이지로 이동 또는 안내 메시지 표시
-- [ ] 좋아요 수 표시를 DB 기반 COUNT로 전환
+- [x] Optimistic UI 적용 — 즉시 UI 반영 후 백그라운드 DB 반영, 실패 시 롤백
+- [x] 비로그인 사용자 좋아요 클릭 시 로그인 페이지로 이동 또는 안내 메시지 표시
+- [x] 좋아요 수 표시를 DB 기반 COUNT로 전환
 
 ### 검증/확인 항목
 
-- [ ] 로그인 후 좋아요 클릭 시 `city_likes` 테이블에 행이 추가되는지 확인
-- [ ] 좋아요 해제 시 `city_likes` 테이블에서 행이 삭제되는지 확인
-- [ ] 페이지 새로고침 후에도 좋아요 상태가 유지되는지 확인 (DB 기반)
-- [ ] 다른 기기/브라우저에서 로그인해도 좋아요 상태가 동기화되는지 확인
-- [ ] 비로그인 상태에서 좋아요 클릭 시 적절한 안내가 표시되는지 확인
-- [ ] 좋아요순 정렬이 DB 기반 좋아요 수로 정상 동작하는지 확인
-- [ ] `npm run build` 통과
+- [x] 로그인 후 좋아요 클릭 시 `city_likes` 테이블에 행이 추가되는지 확인
+- [x] 좋아요 해제 시 `city_likes` 테이블에서 행이 삭제되는지 확인
+- [x] 페이지 새로고침 후에도 좋아요 상태가 유지되는지 확인 (DB 기반)
+- [x] 다른 기기/브라우저에서 로그인해도 좋아요 상태가 동기화되는지 확인
+- [x] 비로그인 상태에서 좋아요 클릭 시 적절한 안내가 표시되는지 확인
+- [x] 좋아요순 정렬이 DB 기반 좋아요 수로 정상 동작하는지 확인
+- [x] `npm run build` 통과
 
 ---
 

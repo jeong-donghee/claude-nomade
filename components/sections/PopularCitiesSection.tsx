@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
 import { CityCard } from "@/data/cities";
 import CityCardComponent from "@/components/sections/CityCard";
 import { useCityLikes } from "@/hooks/useCityLikes";
@@ -10,7 +11,16 @@ interface PopularCitiesSectionProps {
 }
 
 export default function PopularCitiesSection({ cities }: PopularCitiesSectionProps) {
-  const { toggleLike, isLiked, getLikeCount } = useCityLikes();
+  const { toggleLike, isLiked, getLikeCount, setLikeCounts } = useCityLikes();
+
+  // 서버에서 전달받은 좋아요 수를 초기화
+  useEffect(() => {
+    const initialCounts: Record<number, number> = {};
+    cities.forEach((city) => {
+      initialCounts[city.id] = city.likes;
+    });
+    setLikeCounts(initialCounts);
+  }, [cities, setLikeCounts]);
 
   return (
     <section id="cities" className="py-16 bg-[#faf7f2]">
