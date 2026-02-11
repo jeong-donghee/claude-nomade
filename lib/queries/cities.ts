@@ -52,16 +52,22 @@ export async function getCities(): Promise<CityCard[]> {
 }
 
 /**
- * 단일 도시 조회 (기본 + 상세 정보)
+ * 단일 도시 조회 (기본 + 상세 정보 + 좋아요 수)
  */
 export async function getCityById(
   id: number
 ): Promise<(CityCard & CityDetail) | null> {
   const supabase = await createClient();
 
+  // 도시 정보와 좋아요 수를 함께 조회
   const { data, error } = await supabase
     .from("cities")
-    .select("*")
+    .select(
+      `
+      *,
+      city_likes(*)
+    `
+    )
     .eq("id", id)
     .single();
 
@@ -74,7 +80,16 @@ export async function getCityById(
     throw new Error("Failed to fetch city");
   }
 
-  return mapDbCityToFrontend(data);
+  const mapped = mapDbCityToFrontend(data);
+  // city_likes 배열의 길이가 실제 좋아요 수
+  const likesCount = Array.isArray(data.city_likes)
+    ? data.city_likes.length
+    : 0;
+
+  return {
+    ...mapped,
+    likes: likesCount,
+  };
 }
 
 /**
@@ -103,12 +118,13 @@ export async function getCitiesWithLikes(): Promise<CityCard[]> {
   const supabase = await createClient();
 
   // cities 테이블과 city_likes 테이블을 JOIN하여 좋아요 수 집계
+  // city_likes(*)로 모든 관련 레코드를 가져온 후 .length로 카운트
   const { data, error } = await supabase
     .from("cities")
     .select(
       `
       *,
-      city_likes(count)
+      city_likes(*)
     `
     )
     .order("rank", { ascending: true });
@@ -120,11 +136,9 @@ export async function getCitiesWithLikes(): Promise<CityCard[]> {
 
   return data.map((city: any) => {
     const mapped = mapDbCityToFrontend(city);
-    // city_likes의 count를 likes 필드에 반영
+    // city_likes 배열의 길이가 실제 좋아요 수
     const likesCount =
-      Array.isArray(city.city_likes) && city.city_likes.length > 0
-        ? city.city_likes.length
-        : 0;
+      Array.isArray(city.city_likes) ? city.city_likes.length : 0;
     return {
       ...mapped,
       likes: likesCount,
