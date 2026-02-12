@@ -12,6 +12,11 @@
 
 # testing
 /coverage
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/.auth/
+/screenshots/
 
 # next.js
 /.next/
@@ -42,3 +47,6 @@ next-env.d.ts
 
 # MCP configuration (contains project-specific refs)
 .mcp.json
+
+# Claude Code settings (local)
+.claude/settings.local.json
